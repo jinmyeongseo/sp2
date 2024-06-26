@@ -11,7 +11,7 @@
 <div class="body-container">
 	<div class="body-main">
 		<div style="margin-top: 15px;">
-			메인 화면 입니다.
+			관리자 메인 화면 입니다.
 		</div>
     </div>
 </div>

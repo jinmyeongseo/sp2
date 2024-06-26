@@ -9,9 +9,11 @@
 </style>
 
 <div class="body-container">
-	<div class="body-main">
-		<div style="margin-top: 15px;">
-			메인 화면 입니다.
-		</div>
+    <div class="body-title">
+        <h3><i class="fas fa-chalkboard"></i> 제목입니다 </h3>
     </div>
+    
+	<div class="body-main">
+		내용 입니다.
+	</div>
 </div>

@@ -116,14 +116,47 @@ input[type=checkbox], input[type=radio] { vertical-align: middle; }
 	margin-left: 0;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script type="text/javascript">
-function updateScore(hak) {
+$(function() {
+	$(".chkAll").click(function() {
+		let b = $(this).is(":checked") ;
+		$("form input[name=haks]").prop("checked", b);
+	});
 	
+	$(".btnDeleteList").click(function(){
+		let cnt = $("form input[name=haks]:checked").length;
+		
+		if(cnt === 0) {
+			alert("삭제할 정보를 먼저 선택하세요.");
+			return false;
+		}
+		
+		if(confirm("선택한 정보를 삭제하시겠습니까 ? ")) {
+			const f = document.listForm;
+			f.action = "${pageContext.request.contextPath}/score/deleteList";
+			f.submit();
+		}
+	});
+});
+
+function searchList() {
+	const f = document.searchForm;
+	
+	f.submit();
+}
+
+function updateScore(hak) {
+	let query = "hak=" + hak + "&page=${page}"
+	location.href="${pageContext.request.contextPath}/score/update?"+query;
 }
 
 function deleteScore(hak) {
-	
+	if(confirm('정보를 삭제하시겠습니까 ? ')) {
+		let query = "hak=" + hak + "&page=${page}"
+		location.href="${pageContext.request.contextPath}/score/delete?"+query;
+	}
 }
 </script>
 
@@ -138,10 +171,10 @@ function deleteScore(hak) {
 	<table class="table">
 		<tr>
 			<td align="left" width="50%">
-				<button type="button" class="btn">삭제</button>
+				<button type="button" class="btn btnDeleteList">삭제</button>
 			</td>
 			<td align="right">
-				1개(1/1 페이지)
+				${dataCount}개(${page}/${total_page} 페이지)
 			</td>
 		</tr>
 	</table>
@@ -151,7 +184,7 @@ function deleteScore(hak) {
 		<thead>
 			<tr>
 				<th width="35">
-					<input type="checkbox" name="chkAll" value="all">
+					<input type="checkbox" name="chkAll" class="chkAll" value="all">
 				</th>
 				<th width="70">학번</th>
 				<th width="100">이름</th>
@@ -166,30 +199,33 @@ function deleteScore(hak) {
 		</thead>
 
 		<tbody>
-			<tr>
-				<td>
-					<input type="checkbox" name="haks" value="1001">
-				</td>
-				<td>1001</td>
-				<td>홍길동</td>
-				<td>2000-10-10</td>
-				<td>80</td>
-				<td>90</td>
-				<td>100</td>
-				<td>270</td>
-				<td>90</td>
-				<td>
-					<input type="button" value="수정" onclick="updateScore('1001')" class="btn">
-					<input type="button" value="삭제" onclick="deleteScore('1001')" class="btn">
-				</td>
-			</tr>
+			<c:forEach var="dto" items="${list}">
+				<tr>
+					<td>
+						<input type="checkbox" name="haks" value="${dto.hak}">
+					</td>
+					<td>${dto.hak}</td>
+					<td>${dto.name}</td>
+					<td>${dto.birth}</td>
+					<td>${dto.kor}</td>
+					<td>${dto.eng}</td>
+					<td>${dto.mat}</td>
+					<td>${dto.tot}</td>
+					<td>${dto.ave}</td>
+					<td>
+						<input type="button" value="수정" onclick="updateScore('${dto.hak}')" class="btn">
+						<input type="button" value="삭제" onclick="deleteScore('${dto.hak}')" class="btn">
+					</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 
 	</table>
+	<input type="hidden" name="page" value="${page}">
 	</form>
 	
 	<div class="page-navigation">
-		1 2 3
+		${dataCount == 0 ? "등록된 자료가 없습니다." : paging}
 	</div>
 	
 	<table class="table">
@@ -200,12 +236,12 @@ function deleteScore(hak) {
 			<td align="center">
 				<form name="searchForm" action="${pageContext.request.contextPath}/score/list" method="post">
 					<select name="schType" class="form-select">
-						<option value="hak">학번</option>
-						<option value="name">이름</option>
-						<option value="birth">생년월일</option>
+						<option value="hak" ${schType=="hak"?"selected":""}>학번</option>
+						<option value="name" ${schType=="name"?"selected":""}>이름</option>
+						<option value="birth" ${schType=="birth"?"selected":""}>생년월일</option>
 					</select>
-					<input type="text" name="kwd" value="" class="form-control">
-					<button type="button" class="btn">검색</button>
+					<input type="text" name="kwd" value="${kwd}" class="form-control">
+					<button type="button" class="btn" onclick="searchList()">검색</button>
 				</form>
 			</td>
 			<td align="right" width="100">

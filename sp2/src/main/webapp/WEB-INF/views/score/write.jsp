@@ -111,42 +111,42 @@ function check() {
 		<tr>
 			<td>학 번</td>
 			<td>
-				<input type="text" name="hak" class="form-control" maxlength="10">
+				<input type="text" name="hak" class="form-control" maxlength="10" value="${dto.hak}" ${mode=="update"?"readonly":""} required>
 			</td>
 		</tr>
 		
 		<tr>
 			<td>이 름</td>
 			<td>
-				<input type="text" name="name" class="form-control" maxlength="10">
+				<input type="text" name="name" class="form-control" maxlength="10" value="${dto.name}">
 			</td>
 		</tr>
 		
 		<tr>
 			<td>생년월일</td>
 			<td>
-				<input type="date" name="birth" class="form-control" maxlength="10">
+				<input type="date" name="birth" class="form-control" maxlength="10" value="${dto.birth}">
 			</td>
 		</tr>
 		
 		<tr>
 			<td>국 어</td>
 			<td>
-				<input type="text" name="kor" class="form-control" maxlength="3">
+				<input type="text" name="kor" class="form-control" maxlength="3" value="${dto.kor}">
 			</td>
 		</tr>
 		
 		<tr>
 			<td>영 어</td>
 			<td>
-				<input type="text" name="eng" class="form-control" maxlength="3">
+				<input type="text" name="eng" class="form-control" maxlength="3" value="${dto.eng}">
 			</td>
 		</tr>
 		
 		<tr>
 			<td>수 학</td>
 			<td>
-				<input type="text" name="mat" class="form-control" maxlength="3">
+				<input type="text" name="mat" class="form-control" maxlength="3" value="${dto.mat}">
 			</td>
 		</tr>
 		</table>
@@ -154,10 +154,13 @@ function check() {
 		<table class="table">
 		<tr>
 			<td align="center" colspan="2">
-				<button type="submit" class="btn"> 등록완료 </button> 
+				<button type="submit" class="btn"> ${mode=="update"?"수정완료":"등록완료"} </button> 
 				<button type="reset" class="btn"> 다시입력 </button>
 				<button type="button" class="btn"
-					onclick="javascript:location.href='${pageContext.request.contextPath}/score/list';"> 등록취소 </button>
+					onclick="javascript:location.href='${pageContext.request.contextPath}/score/list';"> ${mode=="update"?"수정취소":"등록취소"} </button>
+				<c:if test="${mode=='update'}">
+					<input type="hidden" name="page" value="${page}">
+				</c:if>
 			</td>
 		</tr>
 		</table>

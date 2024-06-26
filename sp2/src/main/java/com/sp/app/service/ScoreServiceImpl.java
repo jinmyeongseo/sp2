@@ -27,20 +27,32 @@ public class ScoreServiceImpl implements ScoreService {
 
 	@Override
 	public void updateScore(Score dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			mapper.updateScore(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}		
 	}
 
 	@Override
 	public void deleteScore(String hak) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			mapper.deleteScore(hak);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}	
 	}
 
 	@Override
 	public void deleteScoreList(List<String> list) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			mapper.deleteScoreList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}		
 	}
 
 	@Override
@@ -65,13 +77,19 @@ public class ScoreServiceImpl implements ScoreService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
 	public Score findById(String hak) {
-		// TODO Auto-generated method stub
-		return null;
+		Score dto = null;
+		
+		try {
+			dto = mapper.findById(hak);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 }
