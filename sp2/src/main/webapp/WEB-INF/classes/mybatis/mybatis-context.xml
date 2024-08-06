@@ -72,4 +72,20 @@
 	</bean>
 	-->
 	<mybatis-spring:scan base-package="com.sp.app.mapper" />
+	
+	<!-- 선언전 방법으로 트랜잭션 처리 : XML 또는 @Transactional 애노테이션으로 트랜잭션 처리 -->
+	<!-- XML을 이용한 트랜잭션 처리 : 트랜잭션을 위한 Advice 설정 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" rollback-for="Exception"/>
+			<tx:method name="update*" rollback-for="Exception"/>
+			<tx:method name="delete*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- AOP 적용 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(public * com.sp.app..*Service.*(..))" id="serviceOperation"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" id="transactionAdvisor  "/>
+	</aop:config>
 </beans>

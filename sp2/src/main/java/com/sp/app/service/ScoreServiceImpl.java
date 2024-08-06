@@ -13,16 +13,16 @@ import com.sp.app.mapper.ScoreMapper;
 public class ScoreServiceImpl implements ScoreService {
 	@Autowired
 	private ScoreMapper mapper;
-	
+
 	@Override
 	public void insertScore(Score dto) throws Exception {
 		try {
 			mapper.insertScore(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
+
 			throw e;
 		}
-		
 	}
 
 	@Override
@@ -31,8 +31,9 @@ public class ScoreServiceImpl implements ScoreService {
 			mapper.updateScore(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
+
 			throw e;
-		}		
+		}
 	}
 
 	@Override
@@ -41,54 +42,67 @@ public class ScoreServiceImpl implements ScoreService {
 			mapper.deleteScore(hak);
 		} catch (Exception e) {
 			e.printStackTrace();
+
 			throw e;
-		}	
+		}
 	}
 
 	@Override
-	public void deleteScoreList(List<String> list) throws Exception {
+	public void deleteScore(List<String> list) throws Exception {
 		try {
-			mapper.deleteScoreList(list);
+			mapper.deleteListScore(list);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw e;
-		}		
-	}
 
+			throw e;
+		}
+	}
+	
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
-		
 		try {
 			result = mapper.dataCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public List<Score> listScore(Map<String, Object> map) {
 		List<Score> list = null;
-		
 		try {
 			list = mapper.listScore(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return list;
 	}
 
 	@Override
+	public List<Score> listScore() {
+		List<Score> list = null;
+		try {
+			list = mapper.findByAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	@Override
 	public Score findById(String hak) {
 		Score dto = null;
-		
 		try {
 			dto = mapper.findById(hak);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return dto;
 	}
 

@@ -58,6 +58,4 @@ public class Score {
 	public void setAve(int ave) {
 		this.ave = ave;
 	}
-	
-	
 }

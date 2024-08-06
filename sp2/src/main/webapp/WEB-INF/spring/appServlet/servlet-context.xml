@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<annotation-driven />
 
@@ -43,5 +45,10 @@
 		<beans:property name="defaultEncoding" value="utf-8"/>
 		<beans:property name="maxUploadSize" value="10485760" />
     </beans:bean>
-
+	
+	<!-- 트랜잭션 처리 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(public * com.sp.app..*Controller.*(..))" id="controllerOperation"/>
+	</aop:config>
+	
 </beans:beans>

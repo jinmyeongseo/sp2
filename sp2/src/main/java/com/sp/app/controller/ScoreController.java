@@ -131,7 +131,7 @@ public class ScoreController {
 	@PostMapping("deleteList")
 	public String deleteList(@RequestParam List<String> haks, @RequestParam String page) throws Exception {
 		try {
-			service.deleteScoreList(haks);
+			service.deleteScore(haks);
 		} catch (Exception e) {
 			
 		}
